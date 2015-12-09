@@ -1,7 +1,7 @@
 'use strict';
 
 // attatches function to button/result pair
-function hookUpButton(fn, day, part) {
+function hookUpButton(fn, day, part, halt) {
   var input = document.getElementById('input-day'+day);
   var button = document.getElementById('button-day'+day+'-part'+part);
   var result = document.getElementById('result-day'+day+'-part'+part);
@@ -15,6 +15,8 @@ function hookUpButton(fn, day, part) {
   // attach listener
   button.addEventListener('click', getResult);
 
-  // run it once
-  getResult();
+  if (!halt) {
+    // run it once
+    getResult();
+  }
 }
