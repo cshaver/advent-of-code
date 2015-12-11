@@ -36,20 +36,22 @@ function noNaughtySubstrings(str) {
          str.indexOf('xy') === -1;
 }
 
-function isNice(str) {
-  return hasThreeVowels(str) && hasDoubleLetter(str) && noNaughtySubstrings(str);
-}
-
-function howManyNiceStrings(input) {
+function howManyNiceStrings(input, fn) {
   var arr = input.split(',');
   var numNice = 0;
   for (var i = 0; i < arr.length; i++) {
-    if (isNice(arr[i])) {
+    if (fn(arr[i])) {
       numNice++;
     }
   }
 
   return numNice;
+}
+
+function niceStringsPartOne(input) {
+  return howManyNiceStrings(input, function(str) {
+    return hasThreeVowels(str) && hasDoubleLetter(str) && noNaughtySubstrings(str);
+  });
 }
 
 /*
@@ -70,10 +72,21 @@ ieodomkazucvgmuy is naughty because it has a repeating letter with one between (
 How many strings are nice under these new rules?
 */
 
+function hasRepeatedPair(str) {
+  var re = /\w*(\w\w)\w*\1\w*/;
+  return re.test(str);
+}
 
-// function partTwo(input) {
+function hasSandwichLetters(str) {
+  var re = /\w*(\w)\w\1\w*/;
+  return re.test(str);
+}
 
-// }
+function niceStringsPartTwo(input) {
+  return howManyNiceStrings(input, function(str) {
+    return hasRepeatedPair(str) && hasSandwichLetters(str);
+  });
+}
 
-hookUpButton(howManyNiceStrings, 5, 1, false);
-// hookUpButton(partTwo, 0, 2, false);
+hookUpButton(niceStringsPartOne, 5, 1, false);
+hookUpButton(niceStringsPartTwo, 5, 2, false);
